@@ -1,5 +1,5 @@
-[![Steam Workshop Subscribers](https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Fshieldsio-steam-workshop.jross.me%2F2789843402%2Fsubscriptions-text)](https://steamcommunity.com/sharedfiles/filedetails/?id=2789843402)
-[![Steam Workshop Favorites](https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Fshieldsio-steam-workshop.jross.me%2F2789843402%2Ffavourites-text)](https://steamcommunity.com/sharedfiles/filedetails/?id=2789843402)
+[![Steam Workshop Subscribers](https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Fshieldsio-steam-workshop.jross.me%2F2841939065%2Fsubscriptions-text)](https://steamcommunity.com/sharedfiles/filedetails/?id=2841939065)
+[![Steam Workshop Favorites](https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Fshieldsio-steam-workshop.jross.me%2F2841939065%2Ffavourites-text)](https://steamcommunity.com/sharedfiles/filedetails/?id=2841939065)
 
 # Allegiance of the Damned
 
@@ -8,7 +8,7 @@
 [![GitHub license](https://img.shields.io/github/license/msolefonte/tww3-chaos-confederation?style=flat)](https://github.com/msolefonte/tww3-chaos-confederation/blob/master/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 
-[Steam Workshop Mod Link](https://steamcommunity.com/sharedfiles/filedetails/?id=2789843402)
+[Steam Workshop Mod Link](https://steamcommunity.com/sharedfiles/filedetails/?id=2841939065)
 
 Allegiance of the Damned mod for Total War: Warhammer III.
 
