@@ -1,5 +1,5 @@
-local debug_mode = false; -- TODO Remember this one
-local wwc = {
+local debug_mode = false; -- TODO Always set to false for production
+local wcc = {
     confederable_legendary_lords = {
         wh_dlc01_chs_kholek_suneater = true,
         wh_dlc01_chs_prince_sigvald = true,
@@ -80,8 +80,8 @@ local wwc = {
     }
 }
 
-function wwc.load_minor_factions()
-    out("WWC Loading Minor Factions");
+function wcc.load_minor_factions()
+    out("WCC Loading Minor Factions");
     local function table_concat(t1,t2)
         for i=1,#t2 do
             t1[#t1+1] = t2[i];
@@ -111,53 +111,53 @@ function wwc.load_minor_factions()
         "wh3_main_tze_sarthoraels_watchers"
     };
 
-    wwc.valid_factions["wh3_main_kho_exiles_of_khorne"] = table_concat(
-        wwc.valid_factions["wh3_main_nur_poxmakers_of_nurgle"],
+    wcc.valid_factions["wh3_main_kho_exiles_of_khorne"] = table_concat(
+        wcc.valid_factions["wh3_main_nur_poxmakers_of_nurgle"],
         minor_khorne
     );
 
-    wwc.valid_factions["placeholder_valkia_faction"] = table_concat(
-        wwc.valid_factions["placeholder_valkia_faction"],
+    wcc.valid_factions["placeholder_valkia_faction"] = table_concat(
+        wcc.valid_factions["placeholder_valkia_faction"],
         minor_khorne
     );
 
-    wwc.valid_factions["wh3_main_nur_poxmakers_of_nurgle"] = table_concat(
-        wwc.valid_factions["wh3_main_nur_poxmakers_of_nurgle"],
+    wcc.valid_factions["wh3_main_nur_poxmakers_of_nurgle"] = table_concat(
+        wcc.valid_factions["wh3_main_nur_poxmakers_of_nurgle"],
         minor_nurgle
     );
 
-    wwc.valid_factions["placeholder_festus_faction"] = table_concat(
-        wwc.valid_factions["placeholder_festus_faction"],
+    wcc.valid_factions["placeholder_festus_faction"] = table_concat(
+        wcc.valid_factions["placeholder_festus_faction"],
         minor_nurgle
     );
 
-    wwc.valid_factions["wh3_main_sla_seducers_of_slaanesh"] = table_concat(
-        wwc.valid_factions["wh3_main_nur_poxmakers_of_nurgle"],
+    wcc.valid_factions["wh3_main_sla_seducers_of_slaanesh"] = table_concat(
+        wcc.valid_factions["wh3_main_nur_poxmakers_of_nurgle"],
         minor_slaanesh
     );
 
-    wwc.valid_factions["placeholder_azazel_faction"] = table_concat(
-        wwc.valid_factions["placeholder_azazel_faction"],
+    wcc.valid_factions["placeholder_azazel_faction"] = table_concat(
+        wcc.valid_factions["placeholder_azazel_faction"],
         minor_slaanesh
     );
 
-    wwc.valid_factions["placeholder_sigvald_faction"] = table_concat(
-        wwc.valid_factions["placeholder_sigvald_faction"],
+    wcc.valid_factions["placeholder_sigvald_faction"] = table_concat(
+        wcc.valid_factions["placeholder_sigvald_faction"],
         minor_slaanesh
     );
 
-    wwc.valid_factions["wh3_main_tze_oracles_of_tzeentch"] = table_concat(
-        wwc.valid_factions["wh3_main_nur_poxmakers_of_nurgle"],
+    wcc.valid_factions["wh3_main_tze_oracles_of_tzeentch"] = table_concat(
+        wcc.valid_factions["wh3_main_nur_poxmakers_of_nurgle"],
         minor_tzeentch
     );
 
-    wwc.valid_factions["placeholder_vilitch_faction"] = table_concat(
-        wwc.valid_factions["placeholder_vilitch_faction"],
+    wcc.valid_factions["placeholder_vilitch_faction"] = table_concat(
+        wcc.valid_factions["placeholder_vilitch_faction"],
         minor_tzeentch
     );
 
-    wwc.valid_factions["placeholder_belakor_faction"] = table_concat(
-        wwc.valid_factions["placeholder_belakor_faction"],
+    wcc.valid_factions["placeholder_belakor_faction"] = table_concat(
+        wcc.valid_factions["placeholder_belakor_faction"],
         table_concat(minor_khorne,
             table_concat(minor_nurgle,
                 table_concat(minor_slaanesh, minor_tzeentch)
@@ -165,8 +165,8 @@ function wwc.load_minor_factions()
         )
     );
 
-    wwc.valid_factions["wh3_main_dae_daemon_prince"] = table_concat(
-        wwc.valid_factions["wh3_main_dae_daemon_prince"],
+    wcc.valid_factions["wh3_main_dae_daemon_prince"] = table_concat(
+        wcc.valid_factions["wh3_main_dae_daemon_prince"],
         table_concat(minor_khorne,
             table_concat(minor_nurgle,
                 table_concat(minor_slaanesh, minor_tzeentch)
@@ -175,22 +175,25 @@ function wwc.load_minor_factions()
     );
 end
 
-function wwc.load_minor_factions_if_required()
-    if true then  -- TODO if MCT is installed // Ask Vandy
-        local mct = context:mct();
+function wcc.load_minor_factions_if_required()
+    if get_mct then
+        local mct = get_mct();
 
-        out("WWC Loading config from MCT");
-        wwc.enable_minor_factions = mct:get_mod_by_key("wolfy_woc_confederation"):get_option_by_key("wwc_enable_minor_factions");
+        if mct ~= nil then
+            out("WCC Loading config from MCT");
+            local mod_cfg = mct:get_mod_by_key("wolfy_chaos_confederation");
+            wcc.enable_minor_factions = mod_cfg:get_option_by_key("wcc_enable_minor_factions"):get_finalized_setting();
+        end
     end
 
-    out("WWC Check if a Minor Factions are enabled");
-    if wwc.enable_minor_factions then
-        wwc.load_minor_factions();
+    out("WCC Check if Minor Factions are enabled");
+    if wcc.enable_minor_factions then
+        wcc.load_minor_factions();
     end
 end
 
-function wwc.check_attacker_and_defender_races_are_valid()
-    out("WWC Check attacker and defender races are valid IN");
+function wcc.check_attacker_and_defender_races_are_valid()
+    out("WCC Check attacker and defender races are valid IN");
     if debug_mode then
         return true;
     end
@@ -198,62 +201,62 @@ function wwc.check_attacker_and_defender_races_are_valid()
     local attacker_valid = false;
     local defender_valid = false;
 
-    for _, race in ipairs(wwc.valid_races) do
+    for _, race in ipairs(wcc.valid_races) do
         if cm:pending_battle_cache_culture_is_attacker(race) then
-            out("WWC Valid attacker race: " .. race);
+            out("WCC Valid attacker race: " .. race);
             attacker_valid = true;
         end
         if cm:pending_battle_cache_culture_is_defender(race) then
-            out("WWC Valid defender race: " .. race);
+            out("WCC Valid defender race: " .. race);
             defender_valid = true;
         end
     end
 
-    out("WWC Check attacker and defender races are valid OUT");
+    out("WCC Check attacker and defender races are valid OUT");
     return attacker_valid and defender_valid;
 end
 
-function wwc.check_if_confederation_is_possible(victorious_character_faction_name, defeated_character)
-    out("WWC Check if a confederation is possible IN");
+function wcc.check_if_confederation_is_possible(victorious_character_faction_name, defeated_character)
+    out("WCC Check if a confederation is possible IN");
     if defeated_character:is_faction_leader() then
         if debug_mode then
             return true;
         end
 
-        www.load_minor_factions_if_required();
+        wcc.load_minor_factions_if_required();
 
-        local valid_factions = wwc.valid_factions[victorious_character_faction_name]
+        local valid_factions = wcc.valid_factions[victorious_character_faction_name]
         if valid_factions ~= nil then
             for _, valid_faction in ipairs(valid_factions) do
                 if defeated_character:faction():name() == valid_faction then
-                    out("WWC Confederation valid: " .. valid_faction .. " -> " .. victorious_character_faction_name);
-                    out("WWC Check attacker and defender factions are valid OUT");
+                    out("WCC Confederation valid: " .. valid_faction .. " -> " .. victorious_character_faction_name);
+                    out("WCC Check attacker and defender factions are valid OUT");
                     return true;
                 end
             end
         end
     end
-    out("WWC Check if a confederation is possible OUT");
+    out("WCC Check if a confederation is possible OUT");
     return false;
 end
 
-function wwc.force_kill_leader(enemy_leader_family_member_key)
+function wcc.force_kill_leader(enemy_leader_family_member_key)
 	local character_interface = cm:get_family_member_by_cqi(enemy_leader_family_member_key):character();
 	local character_cqi = character_interface:command_queue_index();
 
-	if wwc.confederable_legendary_lords[character_interface:character_subtype_key()] then
-		script_error(string.format("ERROR: WWC Attempt was made to force-kill one of the legendary lords ('%s'): this should not be possible through events, as legendary lords should trigger a confederation dilemma with no execution option. Aborting process.",
+	if wcc.confederable_legendary_lords[character_interface:character_subtype_key()] then
+		script_error(string.format("ERROR: WCC Attempt was made to force-kill one of the legendary lords ('%s'): this should not be possible through events, as legendary lords should trigger a confederation dilemma with no execution option. Aborting process.",
 			character_interface:character_subtype_key()));
 		return;
 	end
-	out("WWC KILLING CHARACTER: " .. character_interface:get_forename());
+	out("WCC KILLING CHARACTER: " .. character_interface:get_forename());
 	cm:set_character_immortality("character_cqi:"..character_cqi, false);
 	cm:kill_character(character_cqi, false);
 end
 
-function wwc.listen_for_execution_of_lord(enemy_leader_family_member_key)
+function wcc.listen_for_execution_of_lord(enemy_leader_family_member_key)
 	core:add_listener(
-		"wwc_dilemma_choice_made_event",
+		"wcc_dilemma_choice_made_event",
 		"DilemmaChoiceMadeEvent",
 		true,
 		function(context)
@@ -261,20 +264,20 @@ function wwc.listen_for_execution_of_lord(enemy_leader_family_member_key)
 				cm:callback(function() cm:autosave_at_next_opportunity() end, 0.5);
 			end;
 
-			if context:dilemma() == wwc.dilemma_key and context:choice() == wwc.dilemma_execution_option then
-				wwc.force_kill_leader(enemy_leader_family_member_key);
+			if context:dilemma() == wcc.dilemma_key and context:choice() == wcc.dilemma_execution_option then
+				wcc.force_kill_leader(enemy_leader_family_member_key);
 			end
 		end,
 		false
 	);
 end
 
-function wwc.attempt_to_launch_confederate_dilemma(victorious_character_faction, defeated_character)
-    if wwc.check_if_confederation_is_possible(victorious_character_faction:name(), defeated_character) then
+function wcc.attempt_to_launch_confederate_dilemma(victorious_character_faction, defeated_character)
+    if wcc.check_if_confederation_is_possible(victorious_character_faction:name(), defeated_character) then
         if victorious_character_faction:is_human() then
-            local confederate_dilemma_key = wwc.confederate_dilemma_key;
-            if wwc.confederable_legendary_lords[defeated_character:character_subtype_key()] ~= nil then
-                confederate_dilemma_key = wwc.dilemma_key_lls;
+            local confederate_dilemma_key = wcc.confederate_dilemma_key;
+            if wcc.confederable_legendary_lords[defeated_character:character_subtype_key()] ~= nil then
+                confederate_dilemma_key = wcc.dilemma_key_lls;
             end
 
             cm:trigger_dilemma_with_targets(victorious_character_faction:command_queue_index(),
@@ -285,24 +288,24 @@ function wwc.attempt_to_launch_confederate_dilemma(victorious_character_faction,
                 0,
                 0,
                 0,
-                function() wwc.listen_for_execution_of_lord(defeated_character:family_member():command_queue_index()) end);
+                function() wcc.listen_for_execution_of_lord(defeated_character:family_member():command_queue_index()) end);
         else
             cm:force_confederation(victorious_character_faction:name(), defeated_character:faction():name());
-            out.design("###### WWC AI WOC CONFEDERATION");
-            out.design("WWC Faction: ".. victorious_character_faction:name().." is confederating ".. defeated_character:faction():name());
+            out.design("###### WCC AI CONFEDERATION");
+            out.design("WCC Faction: ".. victorious_character_faction:name().." is confederating ".. defeated_character:faction():name());
         end
     end
 end
 
 function main()
-    out("WWC LOADED");
+    out("WCC LOADED");
 
     core:add_listener(
-        "wwc_character_completed_battle_woc_confederation_dilemma",
+        "wcc_character_completed_battle_chaos_confederation_dilemma",
         "BattleCompleted",
         true,
         function(context)
-            if not wwc.check_attacker_and_defender_races_are_valid() then
+            if not wcc.check_attacker_and_defender_races_are_valid() then
                 return;
             end
 
@@ -312,7 +315,7 @@ function main()
             elseif cm:pending_battle_cache_defender_victory() then
                 victorious_character = cm:get_character_by_cqi(cm:pending_battle_cache_get_defender(1));
             elseif cm:model():pending_battle():has_been_fought() then
-                script_error("ERROR: WWC Attempted to get victorious character in most recent battle when trying to fire WoC Confederation event, but the battle was neither an attacker nor a defender victory. This is unhandled.");
+                script_error("ERROR: WCC Attempted to get victorious character in most recent battle when trying to fire Chaos Confederation event, but the battle was neither an attacker nor a defender victory. This is unhandled.");
                 return;
             else
                 -- Likely a retreat.
@@ -339,10 +342,10 @@ function main()
 
                 if enemy_fm:character_details():is_immortal() then
                     cm:progress_on_event(
-                        "wwc_woc_leader_respawned",
+                        "wcc_chaos_leader_respawned",
                         "CharacterCreated",
                         function(context) return context.character and not context:character():is_null_interface() end,
-                        function(context) wwc.attempt_to_launch_confederate_dilemma(victorious_character:faction(), context:character()) end,
+                        function(context) wcc.attempt_to_launch_confederate_dilemma(victorious_character:faction(), context:character()) end,
                         custom_character_context
                     );
                 end
