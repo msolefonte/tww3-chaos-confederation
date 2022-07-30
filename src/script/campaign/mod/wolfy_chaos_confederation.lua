@@ -12,10 +12,13 @@ local wcc = {
         wh3_main_tze_kairos = true,
         wh3_main_kho_skarbrand = true
     },
+    config = {
+        enable_ai_confederation = true,
+        enable_minor_factions = true
+    },
     dilemma_execution_option = 1,
     dilemma_key = "wolfy_roc_confederation_generic",
     dilemma_key_lls = "wolfy_roc_confederation_generic_no_execution",
-    enable_minor_factions = true;
     valid_factions = {
         placeholder_archaon_faction = {
             "placeholder_festus_faction",
@@ -175,21 +178,18 @@ function wcc.load_minor_factions()
     );
 end
 
-function wcc.load_minor_factions_if_required()
-    if get_mct then
-        local mct = get_mct();
+function wcc.get_config(config_key)
+  if get_mct then
+      local mct = get_mct();
 
-        if mct ~= nil then
-            out("WCC Loading config from MCT");
-            local mod_cfg = mct:get_mod_by_key("wolfy_chaos_confederation");
-            wcc.enable_minor_factions = mod_cfg:get_option_by_key("wcc_enable_minor_factions"):get_finalized_setting();
-        end
-    end
+      if mct ~= nil then
+          out("WCC Loading config from MCT: " .. config_key);
+          local mod_cfg = mct:get_mod_by_key("wolfy_chaos_confederation");
+          wcc.config[config_key] = mod_cfg:get_option_by_key("wcc_" .. config_key):get_finalized_setting();
+      end
+  end
 
-    out("WCC Check if Minor Factions are enabled");
-    if wcc.enable_minor_factions then
-        wcc.load_minor_factions();
-    end
+  return wcc.config[config_key];
 end
 
 function wcc.check_attacker_and_defender_races_are_valid()
@@ -223,7 +223,9 @@ function wcc.check_if_confederation_is_possible(victorious_character_faction_nam
             return true;
         end
 
-        wcc.load_minor_factions_if_required();
+        if wcc.get_config("enable_minor_factions") then
+            wcc.load_minor_factions();
+        end
 
         local valid_factions = wcc.valid_factions[victorious_character_faction_name]
         if valid_factions ~= nil then
@@ -290,9 +292,11 @@ function wcc.attempt_to_launch_confederate_dilemma(victorious_character_faction,
                 0,
                 function() wcc.listen_for_execution_of_lord(defeated_character:family_member():command_queue_index()) end);
         else
-            cm:force_confederation(victorious_character_faction:name(), defeated_character:faction():name());
-            out.design("###### WCC AI CONFEDERATION");
-            out.design("WCC Faction: ".. victorious_character_faction:name().." is confederating ".. defeated_character:faction():name());
+            if wcc.get_config("enable_ai_confederation") then
+                cm:force_confederation(victorious_character_faction:name(), defeated_character:faction():name());
+                out.design("###### WCC AI CONFEDERATION");
+                out.design("WCC Faction: ".. victorious_character_faction:name().." is confederating ".. defeated_character:faction():name());
+            end
         end
     end
 end
