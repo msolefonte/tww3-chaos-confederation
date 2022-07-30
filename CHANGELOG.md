@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial Release
 
-## [1.1.0] Minor Update - TBA
+## [1.1.0] Minor Update - 30.07.2022
 
 - Add support for the Enable AI Confederation flag (MCT)
 - Fix a bug that allowed non-loreful confederations
