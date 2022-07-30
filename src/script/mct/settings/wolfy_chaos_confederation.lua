@@ -12,3 +12,8 @@ local wcc_enable_minor_factions = mct_mod:add_new_option("wcc_enable_minor_facti
 wcc_enable_minor_factions:set_default_value(true);
 wcc_enable_minor_factions:set_text("Enable Minor Factions");
 wcc_enable_minor_factions:set_tooltip_text("Enable if you want minor factions to be confederable");
+
+local wcc_enable_ai_confederation = mct_mod:add_new_option("wcc_enable_ai_confederation", "checkbox");
+wcc_enable_ai_confederation:set_default_value(true);
+wcc_enable_ai_confederation:set_text("Enable AI Confederation");
+wcc_enable_ai_confederation:set_tooltip_text("Enable if you want the AI to be able to confederate.");
