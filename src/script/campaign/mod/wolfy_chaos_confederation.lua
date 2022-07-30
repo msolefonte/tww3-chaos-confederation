@@ -86,10 +86,14 @@ local wcc = {
 function wcc.load_minor_factions()
     out("WCC Loading Minor Factions");
     local function table_concat(t1,t2)
-        for i=1,#t2 do
-            t1[#t1+1] = t2[i];
+        new = {};
+        for i=1, #t1 do
+            new[#new+1] = t1[i];
         end
-        return t1;
+        for i=1, #t2 do
+            new[#new+1] = t2[i];
+        end
+        return new;
     end
 
     local minor_khorne = {
