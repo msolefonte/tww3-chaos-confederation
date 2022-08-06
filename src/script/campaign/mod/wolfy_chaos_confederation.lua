@@ -1,5 +1,4 @@
-local wcc_datset = require("wolfy_chaos_confederation_dataset");
-
+local wcc_dataset = require("wolfy_chaos_confederation_dataset");
 local config = {
   enable_ai_confederation = true,
   enable_minor_factions = true,
@@ -38,6 +37,7 @@ function is_confederation_possible(victorious_faction_name, defeated_character)
 
     local confederable_factions;
     if get_config("enable_minor_factions") then
+      wcc_log("Minor factions enabled");
       confederable_factions = wcc_dataset.confederable_factions[victorious_faction_name];
     else
       confederable_factions = wcc_dataset.confederable_factions_no_minor[victorious_faction_name];
@@ -165,7 +165,7 @@ function create_character_respawn_listener(victorious_faction, defeated_characte
 end
 
 function evaluate_completed_battle()
-  wcc_log("A battle has been completed\nBattle type: " .. cm:model():pending_battle():battle_type());
+  wcc_log("A battle has been completed. Battle type: " .. cm:model():pending_battle():battle_type());
 
   if are_battle_races_confederable() then
     local victorious_character = get_battle_victorious_character();

@@ -14,9 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for the Enable AI Confederation flag (MCT)
 - Fix a bug that allowed non-loreful confederations
 
-## [1.2.0] - 30.07.2022
+## [1.2.0] - 06.08.2022
 
-- MAJOR REWORK
-- EXTERNALIZED DATASET
-- The default MCT section is now "Base Options"
-- Updated CHANGELOG.md format
+- Major rework
+  - Almost all code has been refactored
+  - Dataset is now static and has been externalized
+  - Should fix the non-loreful confederations bug
+- Add a log file for easier and cleaner bug reporting
+- Rename the MCT defalt section to "Base Options"
+- Update CHANGELOG.md format
