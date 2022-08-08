@@ -23,3 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add a log file for easier and cleaner bug reporting
 - Rename the MCT defalt section to "Base Options"
 - Update CHANGELOG.md format
+
+## [1.2.1] - 08.08.2022
+
+- Improved logging features for better bug reports
+- Added a new MCT section named "Advanced Options"
+- Added an `Enable logging` checkbox to MCT

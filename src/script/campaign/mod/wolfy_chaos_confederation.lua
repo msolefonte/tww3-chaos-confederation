@@ -2,17 +2,14 @@ local wcc_dataset = require("wolfy_chaos_confederation_dataset");
 local config = {
   enable_ai_confederation = true,
   enable_minor_factions = true,
-  logging_enabled = true
+  logging_enabled = false
 }
 
 -- GENERIC --
 
 function wcc_log(str)
-  if config["logging_enabled"] then
-    local log_file = io.open("wcc_log.txt","a")
-    log_file:write("\nWCC " .. str);
-    log_file:flush();
-    log_file:close();
+  if get_config("logging_enabled") then
+    out("[wolfy][wcc] " .. str);
   end
 end
 
@@ -20,7 +17,6 @@ function get_config(config_key)
   if get_mct then
     local mct = get_mct();
     if mct ~= nil then
-      wcc_log("Loading config from MCT: " .. config_key);
       local mod_cfg = mct:get_mod_by_key("wolfy_chaos_confederation");
       return mod_cfg:get_option_by_key("wcc_" .. config_key):get_finalized_setting();
     end
@@ -188,8 +184,6 @@ end
 -- MAIN --
 
 function main()
-  wcc_log("Main\n-------------------");
-  wcc_log("If dataset loaded, then wolfy_roc_confederation_generic == " .. wcc_dataset["dilemma_key"]);
   core:add_listener(
     "wcc_battle_completed",
     "BattleCompleted",
