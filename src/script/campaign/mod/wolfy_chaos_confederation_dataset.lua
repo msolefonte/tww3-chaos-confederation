@@ -179,7 +179,8 @@ local wcc_dataset = {
     "wh3_main_sla_slaanesh",
     "wh3_main_tze_tzeentch"
   },
-  dilemma_execution_option = 1,
+  dilemma_choice_vassalization = 1,
+  dilemma_choice_execution = 2,
   dilemma_key = "wolfy_roc_confederation_generic",
   dilemma_key_lls = "wolfy_roc_confederation_generic_no_execution"
 }
