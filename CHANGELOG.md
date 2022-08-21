@@ -29,3 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved logging features for better bug reports
 - Added a new MCT section named "Advanced Options"
 - Added an `Enable logging` checkbox to MCT
+
+## [1.3.0] - 21.08.2022
+
+- Added a vassalization choice to the confederation dilemma
+- Fixed a bug that caused an error when AI minor factions tried to confederate
+- Fixed a bug that prevented player from confederating minor factions
+- Updated workshop first image

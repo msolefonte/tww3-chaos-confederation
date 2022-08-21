@@ -39,10 +39,12 @@ function is_confederation_possible(victorious_faction_name, defeated_character)
       confederable_factions = wcc_dataset.confederable_factions_no_minor[victorious_faction_name];
     end
 
-    for _, confederable_faction in ipairs(confederable_factions) do
-      if defeated_character:faction():name() == confederable_faction then
-        wcc_log("Confederation valid: " .. confederable_faction .. " -> " .. victorious_faction_name);
-        return true;
+    if confederable_factions ~= nil then
+      for _, confederable_faction in ipairs(confederable_factions) do
+        if defeated_character:faction():name() == confederable_faction then
+          wcc_log("Confederation valid: " .. confederable_faction .. " -> " .. victorious_faction_name);
+          return true;
+        end
       end
     end
   end
@@ -64,19 +66,27 @@ function force_kill_leader(enemy_leader_family_member_key)
 	cm:kill_character(character_cqi, false);
 end
 
-function listen_for_execution_of_lord(enemy_leader_family_member_key)
+function add_dilemma_choice_listeners(victorious_faction, defeated_character)
 	core:add_listener(
 		"wcc_dilemma_choice_made_event",
 		"DilemmaChoiceMadeEvent",
 		true,
 		function(context)
+      wcc_log("Dilemma " .. context:dilemma() .. " choice made. Choice selected: " .. context:choice());
 			if cm:model():difficulty_level() == -3 and not cm:is_multiplayer() then  -- Auto save on legendary
+        wcc_log("Autosaving on Legendary");
 				cm:callback(function() cm:autosave_at_next_opportunity() end, 0.5);
 			end;
 
-			if context:dilemma() == wcc_dataset.dilemma_key and context:choice() == wcc_dataset.dilemma_execution_option then
-				force_kill_leader(enemy_leader_family_member_key);
+			if context:dilemma() == wcc_dataset.dilemma_key and context:choice() == wcc_dataset.dilemma_choice_execution then
+				force_kill_leader(defeated_character:family_member():command_queue_index());
 			end
+
+      if (context:dilemma() == wcc_dataset.dilemma_key or context:dilemma() == wcc_dataset.dilemma_key_lls) and
+          context:choice() == wcc_dataset.dilemma_choice_vassalization then
+        wcc_log("Force make vassal: " .. victorious_faction:name() .. " -> " ..  defeated_character:faction():name());
+        cm:force_make_vassal(victorious_faction:name(), defeated_character:faction():name())
+      end
 		end,
 		false
 	);
@@ -85,20 +95,17 @@ end
 function attempt_to_launch_confederate_dilemma(victorious_faction, defeated_character)
   if is_confederation_possible(victorious_faction:name(), defeated_character) then
     if victorious_faction:is_human() then
-      local confederate_dilemma_key = wcc_dataset.confederate_dilemma_key;
+      local confederate_dilemma_key = wcc_dataset.dilemma_key;
       if wcc_dataset.confederable_legendary_lords[defeated_character:character_subtype_key()] ~= nil then
         confederate_dilemma_key = wcc_dataset.dilemma_key_lls;
       end
 
-      cm:trigger_dilemma_with_targets(victorious_faction:command_queue_index(),
-        confederate_dilemma_key,
-        defeated_character:faction():command_queue_index(),
-        0,
-        defeated_character:command_queue_index(),
-        0,
-        0,
-        0,
-        function() listen_for_execution_of_lord(defeated_character:family_member():command_queue_index()) end);
+      cm:trigger_dilemma_with_targets(
+        victorious_faction:command_queue_index(), confederate_dilemma_key,
+        defeated_character:faction():command_queue_index(), 0, defeated_character:command_queue_index(), 0, 0, 0,
+        function()
+          add_dilemma_choice_listeners(victorious_faction, defeated_character);
+        end);
     elseif get_config("enable_ai_confederation") then
       wcc_log("Faction ".. victorious_faction:name().." is confederating ".. defeated_character:faction():name());
       cm:force_confederation(victorious_faction:name(), defeated_character:faction():name());
