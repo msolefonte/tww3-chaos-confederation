@@ -7,13 +7,7 @@ local config = {
 
 -- GENERIC --
 
-function wcc_log(str)
-  if get_config("logging_enabled") then
-    out("[wolfy][wcc] " .. str);
-  end
-end
-
-function get_config(config_key)
+local function get_config(config_key)
   if get_mct then
     local mct = get_mct();
     if mct ~= nil then
@@ -25,9 +19,32 @@ function get_config(config_key)
   return config[config_key];
 end
 
+local function wcc_log(str)
+  if get_config("logging_enabled") then
+    out("[wolfy][wcc] " .. str);
+  end
+end
+
 -- CHAOS CONFEDERATION --
 
-function is_confederation_possible(victorious_faction_name, defeated_character)
+local function are_battle_races_confederable()
+  local attacker_valid = false;
+  local defender_valid = false;
+  for _, race in ipairs(wcc_dataset.confederable_races) do
+    if cm:pending_battle_cache_culture_is_attacker(race) then
+      wcc_log("Confederable attacker race " .. race);
+      attacker_valid = true;
+    end
+    if cm:pending_battle_cache_culture_is_defender(race) then
+      wcc_log("Confederable defender race " .. race);
+      defender_valid = true;
+    end
+  end
+
+  return attacker_valid and defender_valid;
+end
+
+local function is_confederation_possible(victorious_faction_name, defeated_character)
   if defeated_character:is_faction_leader() then
     wcc_log("Defeated character is faction leader!");
 
@@ -52,7 +69,7 @@ function is_confederation_possible(victorious_faction_name, defeated_character)
   return false;
 end
 
-function force_kill_leader(enemy_leader_family_member_key)
+local function force_kill_leader(enemy_leader_family_member_key)
 	local character_interface = cm:get_family_member_by_cqi(enemy_leader_family_member_key):character();
 
 	if wcc_dataset.confederable_legendary_lords[character_interface:character_subtype_key()] then
@@ -66,7 +83,7 @@ function force_kill_leader(enemy_leader_family_member_key)
 	cm:kill_character(character_cqi, false);
 end
 
-function add_dilemma_choice_listeners(victorious_faction, defeated_character)
+local function add_dilemma_choice_listeners(victorious_faction, defeated_character)
 	core:add_listener(
 		"wcc_dilemma_choice_made_event",
 		"DilemmaChoiceMadeEvent",
@@ -92,7 +109,16 @@ function add_dilemma_choice_listeners(victorious_faction, defeated_character)
 	);
 end
 
-function attempt_to_launch_confederate_dilemma(victorious_faction, defeated_character)
+local function trigger_confederate_dilemma(victorious_fm, defeated_fm)
+	local victorious_character = victorious_fm:character();
+	local defeated_character = defeated_fm:character();
+
+	if not victorious_character or victorious_character:is_null_interface() or
+     not defeated_character or defeated_character:is_null_interface() then
+		return;
+	end
+
+  local victorious_faction = victorious_character:faction();
   if is_confederation_possible(victorious_faction:name(), defeated_character) then
     if victorious_faction:is_human() then
       local confederate_dilemma_key = wcc_dataset.dilemma_key;
@@ -113,89 +139,23 @@ function attempt_to_launch_confederate_dilemma(victorious_faction, defeated_char
   end
 end
 
-function are_battle_races_confederable()
-  local attacker_valid = false;
-  local defender_valid = false;
-  for _, race in ipairs(wcc_dataset.confederable_races) do
-    if cm:pending_battle_cache_culture_is_attacker(race) then
-      wcc_log("Confederable attacker race " .. race);
-      attacker_valid = true;
-    end
-    if cm:pending_battle_cache_culture_is_defender(race) then
-      wcc_log("Confederable defender race " .. race);
-      defender_valid = true;
-    end
-  end
-
-  return attacker_valid and defender_valid;
-end
-
-function get_battle_victorious_character()
-  if cm:pending_battle_cache_attacker_victory() then
-    return cm:get_character_by_cqi(cm:pending_battle_cache_get_attacker(1));
-  elseif cm:pending_battle_cache_defender_victory() then
-    return cm:get_character_by_cqi(cm:pending_battle_cache_get_defender(1));
-  else
-    return nil; -- Likely a retreat, sometimes a bug.
-  end
-end
-
-function get_defeated_enemy_family_members(victorious_character)
-  -- We have to get the enemies using family members, instead of character interfaces
-  -- When enemies die and respawn, their character CQIs change, but not their family member ones
-  return cm:pending_battle_cache_get_enemy_fms_of_char_fm(victorious_character:family_member());
-end
-
-function create_character_respawn_listener(victorious_faction, defeated_character)
-  local custom_character_context = custom_context:new();
-  if not defeated_character:is_null_interface() then
-      custom_character_context:add_data(defeated_character);
-  end
-
-  wcc_log("Wait for immortal character to respawn...");
-  cm:progress_on_event(
-    "wcc_character_respawned",
-    "CharacterCreated",
-    function(context)
-      return context.character and not context:character():is_null_interface();
-    end,
-    function(context)
-      wcc_log("Character respawned!");
-      attempt_to_launch_confederate_dilemma(victorious_faction, context:character());
-    end,
-    custom_character_context
-  );
-end
-
-function evaluate_completed_battle()
-  wcc_log("A battle has been completed. Battle type: " .. cm:model():pending_battle():battle_type());
-
-  if are_battle_races_confederable() then
-    local victorious_character = get_battle_victorious_character();
-    if victorious_character ~= nil then
-      wcc_log("Victorious character from faction: " .. victorious_character:faction():name() .. ")");
-
-      local enemy_family_members = get_defeated_enemy_family_members(victorious_character);
-      for i = 1, #enemy_family_members do
-        wcc_log("Checking defeated enemy " .. i .. " (faction: " ..
-                enemy_family_members[i]:character_details():faction():name() .. ")");
-
-        if enemy_family_members[i]:character_details():is_immortal() then
-          create_character_respawn_listener(victorious_character:faction(), enemy_family_members[i]:character());
-        end
-      end
-    end
-  end
-end
-
 -- MAIN --
 
-function main()
+local function main()
   core:add_listener(
     "wcc_battle_completed",
     "BattleCompleted",
     true,
     evaluate_completed_battle,
+    true
+  );
+
+  cm:add_immortal_character_defeated_listener(
+    "wcc_immortal_defeated",
+    function(context)
+      return are_battle_races_confederable();
+    end,
+    trigger_confederate_dilemma,
     true
   );
 end

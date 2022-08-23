@@ -36,3 +36,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed a bug that caused an error when AI minor factions tried to confederate
 - Fixed a bug that prevented player from confederating minor factions
 - Updated workshop first image
+
+## [1.4.0] - 23.08.2022
+
+- Updated to work with the new Warriors of Chaos Faction
+- Fixed breaking bugs introduced with the new 2.0.0 update
