@@ -41,3 +41,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated to work with the new Warriors of Chaos Faction
 - Fixed breaking bugs introduced with the new 2.0.0 update
+
+## [1.5.0] - 23.08.2022
+
+- Added MCT flag for AI confederation
+- Added MCT flag for Archaon confederation with all Chaos factions
+- Added MCT flag for Be'lakor confederation with all Chaos factions
+- Added MCT flag for Daniel confederation with all Chaos factions
+- Added more minor factions
+    - Blood Keepers, Pallid Nurslings, Keepers of Bliss, Apostles of Change and The Sightless
+- Added new images to the mod page
+- Fixed a bug that caused some WoC Legendary Lords to be killable
+- Fixed a minor non-breaking bug
