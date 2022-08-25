@@ -2,6 +2,9 @@ local wcc_dataset = require("wolfy_chaos_confederation_dataset");
 local config = {
   enable_ai_confederation = true,
   enable_minor_factions = true,
+  enable_wh_main_chs_chaos_everyone = false,
+  enable_wh3_main_chs_shadow_legion_everyone = false,
+  enable_wh3_main_dae_daemon_prince_everyone = false,
   logging_enabled = false
 }
 
@@ -12,7 +15,7 @@ local function get_config(config_key)
     local mct = get_mct();
     if mct ~= nil then
       local mod_cfg = mct:get_mod_by_key("wolfy_chaos_confederation");
-      return mod_cfg:get_option_by_key("wcc_" .. config_key):get_finalized_setting();
+      return mod_cfg:get_option_by_key(config_key):get_finalized_setting();
     end
   end
 
@@ -44,7 +47,22 @@ local function are_battle_races_confederable()
   return attacker_valid and defender_valid;
 end
 
+local function faction_can_confederate_everyone(faction_name)
+  local faction_confederation_everyone_enabled = get_config("enable_" .. faction_name .. "_everyone");
+  if faction_confederation_everyone_enabled ~= nil and faction_confederation_everyone_enabled then
+    wcc_log("Faction " .. faction_name .. " gets a free confederation pass");
+    return true;
+  end
+
+  return false;
+end
+
 local function is_confederation_possible(victorious_faction_name, defeated_character)
+  wcc_log("Is confederation possible? " .. defeated_character:faction():name() .. " -> " .. victorious_faction_name);
+  if faction_can_confederate_everyone(victorious_faction_name) then
+    return true;
+  end
+
   if defeated_character:is_faction_leader() then
     wcc_log("Defeated character is faction leader!");
 
@@ -142,14 +160,6 @@ end
 -- MAIN --
 
 local function main()
-  core:add_listener(
-    "wcc_battle_completed",
-    "BattleCompleted",
-    true,
-    evaluate_completed_battle,
-    true
-  );
-
   cm:add_immortal_character_defeated_listener(
     "wcc_immortal_defeated",
     function(context)
