@@ -1,0 +1,3 @@
+subculture	can_make_vassals	can_make_client_states	can_make_confederations
+#diplomatic_action_subculture_restrictions_tables;0;db/diplomatic_action_subculture_restrictions_tables/wolfy_roc_confederation			
+wh_main_sc_chs_chaos	true	false	true
