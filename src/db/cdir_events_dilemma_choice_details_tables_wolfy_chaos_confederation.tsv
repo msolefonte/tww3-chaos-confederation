@@ -1,0 +1,9 @@
+dilemma_key	choice_key	associated_audio_trigger
+#cdir_events_dilemma_choice_details_tables;3;db/cdir_events_dilemma_choice_details_tables/wolfy_chaos_confederation		
+wolfy_roc_confederation_generic	FIRST	
+wolfy_roc_confederation_generic	SECOND	
+wolfy_roc_confederation_generic	THIRD	
+wolfy_roc_confederation_generic	FOURTH	
+wolfy_roc_confederation_generic_no_execution	FIRST	
+wolfy_roc_confederation_generic_no_execution	SECOND	
+wolfy_roc_confederation_generic_no_execution	THIRD	

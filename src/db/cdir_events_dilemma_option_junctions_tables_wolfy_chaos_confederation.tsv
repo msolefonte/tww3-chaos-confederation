@@ -1,0 +1,6 @@
+id	dilemma_key	option_key	value	target
+#cdir_events_dilemma_option_junctions_tables;1;db/cdir_events_dilemma_option_junctions_tables/wolfy_chaos_confederation				
+1851557179	wolfy_roc_confederation_generic	GEN_TARGET_MODEL		default
+2029945483	wolfy_roc_confederation_generic_no_execution	VAR_CHANCE	100	default
+2133837452	wolfy_roc_confederation_generic_no_execution	GEN_TARGET_MODEL		default
+840455587	wolfy_roc_confederation_generic	VAR_CHANCE	100	default

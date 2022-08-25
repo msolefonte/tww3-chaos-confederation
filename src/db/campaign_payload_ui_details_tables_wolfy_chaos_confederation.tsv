@@ -1,0 +1,4 @@
+component	icon	state	sort_order
+#campaign_payload_ui_details_tables;2;db/campaign_payload_ui_details_tables/wolfy_chaos_confederation			
+wwc_confederate_woc_defeated	ui/campaign ui/effect_bundles/confederation.png	default	0
+wcc_vassalize_woc_defeated	ui/skins/default/icon_vassal.png	default	0

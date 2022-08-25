@@ -53,3 +53,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added new images to the mod page
 - Fixed a bug that caused some WoC Legendary Lords to be killable
 - Fixed a minor non-breaking bug
+
+## [1.6.0] - 23.08.2022
+
+- Added Warriors of Chaos confederation via diplomacy
+- Technical
+  - Replace binaries for TSVs for database backups

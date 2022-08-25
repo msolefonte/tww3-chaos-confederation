@@ -1,0 +1,22 @@
+key	text	tooltip
+#Loc PackedFile;1;text/db/wolfy_chaos_confederation.loc		
+campaign_payload_ui_details_description_wwc_confederate_woc_defeated	Allegiance of the Damned	true
+campaign_payload_ui_details_description_wcc_vassalize_woc_defeated	Make them your vassals	false
+cdir_events_dilemma_choice_details_localised_choice_label_wolfy_roc_confederation_genericFIRST	Form Confederation with {{CcoCdirEventsDilemmaChoiceDetailRecord:StoredContextFromParent("CcoCampaignEventDilemma").FirstTargetFactionName}}	false
+cdir_events_dilemma_choice_details_localised_choice_title_wolfy_roc_confederation_genericFIRST	They will learn to serve us.	false
+cdir_events_dilemma_choice_details_localised_choice_label_wolfy_roc_confederation_genericSECOND	They could be useful	false
+cdir_events_dilemma_choice_details_localised_choice_title_wolfy_roc_confederation_genericSECOND	Even the weakest can show supplication.	false
+cdir_events_dilemma_choice_details_localised_choice_label_wolfy_roc_confederation_genericTHIRD	Execute Champion	false
+cdir_events_dilemma_choice_details_localised_choice_title_wolfy_roc_confederation_genericTHIRD	The death of the weak will please the Gods!	false
+cdir_events_dilemma_choice_details_localised_choice_label_wolfy_roc_confederation_genericFOURTH	Release Champion	false
+cdir_events_dilemma_choice_details_localised_choice_title_wolfy_roc_confederation_genericFOURTH	This weakling is not worth the effort!	false
+cdir_events_dilemma_choice_details_localised_choice_label_wolfy_roc_confederation_generic_no_executionFIRST	Form Confederation with {{CcoCdirEventsDilemmaChoiceDetailRecord:StoredContextFromParent("CcoCampaignEventDilemma").FirstTargetFactionName}}	false
+cdir_events_dilemma_choice_details_localised_choice_title_wolfy_roc_confederation_generic_no_executionFIRST	They will learn to serve us.	false
+cdir_events_dilemma_choice_details_localised_choice_label_wolfy_roc_confederation_generic_no_executionSECOND	They could be useful	false
+cdir_events_dilemma_choice_details_localised_choice_title_wolfy_roc_confederation_generic_no_executionSECOND	Even the weakest can show supplication.	false
+cdir_events_dilemma_choice_details_localised_choice_label_wolfy_roc_confederation_generic_no_executionTHIRD	Release Champion	false
+cdir_events_dilemma_choice_details_localised_choice_title_wolfy_roc_confederation_generic_no_executionTHIRD	This weakling is not worth the effort!	false
+dilemmas_localised_title_wolfy_roc_confederation_generic	Champion Defeated	true
+dilemmas_localised_description_wolfy_roc_confederation_generic	{{CcoCampaignEventDilemma:CharacterTargetName}}, champion of {{CcoCampaignEventDilemma:FirstTargetFactionNameWithIcon}} has been defeated, and their warband brought to heel! If there is one thing that Chaos followers respect, it is strength. The first challenge any Chaos Lord must face is to create an incomparable army, and it is that strength that makes such an impossible task a reality.\\n\\nYour new champion will pledge their lands and their warriors to your banner, and march in your name. Remember that as your warband grows, so too does the effort required to manage it. Of course, should you desire, you can simply sacrifice them to the gods, instead. They are weak, after all, and the Dark Gods abhor weakness.	true
+dilemmas_localised_title_wolfy_roc_confederation_generic_no_execution	Champion Defeated	true
+dilemmas_localised_description_wolfy_roc_confederation_generic_no_execution	{{CcoCampaignEventDilemma:CharacterTargetName}}, champion of {{CcoCampaignEventDilemma:FirstTargetFactionNameWithIcon}} has been defeated, and their warband brought to heel! If there is one thing that Chaos followers respect, it is strength. The first challenge any Chaos Lord must face is to create an incomparable army, and it is that strength that makes such an impossible task a reality.\\n\\nYour new champion will pledge their lands and their warriors to your banner, and march in your name. Remember that as your warband grows, so too does the effort required to manage it. Of course, should you desire, you can simply sacrifice them to the gods, instead. They are weak, after all, and the Dark Gods abhor weakness.	true
