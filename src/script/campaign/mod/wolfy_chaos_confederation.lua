@@ -11,15 +11,26 @@ local config = {
 -- GENERIC --
 
 local function get_config(config_key)
+  out("[wolfy][wcc] Getting config for key " .. config_key);
+  local config_value = config[config_key];
+
   if get_mct then
     local mct = get_mct();
     if mct ~= nil then
+      out("[wolfy][wcc] Reading value from MCT");
       local mod_cfg = mct:get_mod_by_key("wolfy_chaos_confederation");
-      return mod_cfg:get_option_by_key(config_key):get_finalized_setting();
+      local opt_key = mod_cfg:get_option_by_key(config_key);
+
+      if not opt_key then
+        out("[wolfy][wcc] ERROR Reading value from MCT: Config key not valid");
+      else
+        config_value = opt_key:get_finalized_value()
+      end
     end
   end
 
-  return config[config_key];
+  out("[wolfy][wcc] Config value read: " .. config_key .. " -> " .. tostring(config_value));
+  return config_value;
 end
 
 local function wcc_log(str)

@@ -42,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated to work with the new Warriors of Chaos Faction
 - Fixed breaking bugs introduced with the new 2.0.0 update
 
-## [1.5.0] - 23.08.2022
+## [1.5.0] - 25.08.2022
 
 - Added MCT flag for AI confederation
 - Added MCT flag for Archaon confederation with all Chaos factions
@@ -54,8 +54,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed a bug that caused some WoC Legendary Lords to be killable
 - Fixed a minor non-breaking bug
 
-## [1.6.0] - 23.08.2022
+## [1.6.0] - 25.08.2022
 
 - Added Warriors of Chaos confederation via diplomacy
 - Technical
   - Replace binaries for TSVs for database backups
+  
+## [1.6.1] - 28.08.2022
+
+- Fixed a bug that prevented non Warriors of Chaos factions from confederating when MCT was enabled
+- Technical:
+ - Added logs to the `get_config` function
