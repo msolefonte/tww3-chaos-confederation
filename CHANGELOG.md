@@ -65,3 +65,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed a bug that prevented non Warriors of Chaos factions from confederating when MCT was enabled
 - Technical:
  - Added logs to the `get_config` function
+ 
+ ## [1.6.2] - 28.08.2022
+ 
+ - Hotfix for 1.6.1
+ - Updated dist images
