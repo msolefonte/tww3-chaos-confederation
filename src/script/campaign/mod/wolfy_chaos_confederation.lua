@@ -24,7 +24,7 @@ local function get_config(config_key)
       if not opt_key then
         out("[wolfy][wcc] ERROR Reading value from MCT: Config key not valid");
       else
-        config_value = opt_key:get_finalized_value()
+        config_value = opt_key:get_finalized_setting();
       end
     end
   end
