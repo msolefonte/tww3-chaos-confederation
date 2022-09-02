@@ -70,3 +70,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  
  - Hotfix for 1.6.1
  - Updated dist images
+ 
+ ## [1.6.3] - 02.09.2022
+ 
+ - Removed cooldown between confederations for Chaos factions
+ - Fixed a bug that allowed the AI to confederate the player
+ - Fixed a bug that allowed minor AI confederation when "Can confederate flags" were turned on
+ - Technical:
+    - Localisation now stored in TSV format
+    - Tabulation now based on tabs instead of spaces
+    - Logging code updated
